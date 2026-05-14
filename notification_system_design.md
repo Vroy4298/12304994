@@ -13,7 +13,7 @@ Priority order used:
 2. Result
 3. Event
 
-I used this order because placement related notifications are more important for students.
+I used this order because placement related notifications are more imporant for students.
 
 ---
 
@@ -44,7 +44,7 @@ Indexes can be added on:
 - type
 - timestamp
 
-This helps while filtering and sorting notifications.
+This helps while filtering and sorting notifications faster.
 
 ---
 
@@ -52,7 +52,7 @@ This helps while filtering and sorting notifications.
 
 ## Query Optimization
 
-As notification data increases, queries become slower especially during sorting and filtering.
+As notification data increases, queries become slower specially during sorting and filtering.
 
 Adding indexes on every field is not a good idea because inserts and updates also become slower.
 
@@ -67,9 +67,9 @@ A better approach is using:
 
 ## Scaling and Performance
 
-Fetching notifications repeatedly from database can increase load.
+Fetching notifications repeatedly from database can increase server load.
 
-To improve performance:
+To improve performace:
 - caching can be used
 - pagination can reduce response size
 - old notifications can be archived
@@ -86,7 +86,7 @@ Sending notifications one by one synchronously can slow down the system.
 
 Using queues improves performance because notifications can be processed in background.
 
-Tools like RabbitMQ or Kafka can also be used in large scale systems.
+Tools like RabbitMQ or Kafka can also be used in large scale systems if requried.
 
 ---
 
@@ -119,4 +119,4 @@ Frontend was built using:
 
 The dashboard displays notifications using cards and colored labels.
 
-Frontend fetches data from backend API and displays latest priority notifications.
+Frontend fetches data from backend API and displays latest priority notifications in a simple UI.
