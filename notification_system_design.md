@@ -1,58 +1,122 @@
 # Stage 1
 
-## APIs
+## Notification API
+
+Backend API used:
 
 GET /api/notifications
 
-Returns notifications sorted based on priority and latest timestamp.
+This endpoint returns notifications after sorting them based on priority and latest timestamp.
 
-Notification Types:
-- Placement
-- Result
-- Event
+Priority order used:
+1. Placement
+2. Result
+3. Event
+
+I used this order because placement related notifications are more important for students.
+
+---
 
 # Stage 2
 
-PostgreSQL is a good choice because notifications are relational and large in number.
+## Database Design
 
-Tables:
-- students
-- notifications
+For database I think PostgreSQL is a good option because notification data is structured and relational.
 
-Indexes should be added on:
+Possible tables:
+
+### students
+- id
+- name
+- email
+- roll_no
+
+### notifications
+- id
+- student_id
+- type
+- message
+- timestamp
+- is_read
+
+Indexes can be added on:
 - student_id
 - type
 - timestamp
 
+This helps while filtering and sorting notifications.
+
+---
+
 # Stage 3
 
-The query becomes slow because the table grows very large.
+## Query Optimization
 
-Adding indexes on every column is not good because inserts become slower.
+As notification data increases, queries become slower especially during sorting and filtering.
 
-Composite indexes are better.
+Adding indexes on every field is not a good idea because inserts and updates also become slower.
+
+A better approach is using:
+- composite indexes
+- pagination
+- optimized filtering queries
+
+---
 
 # Stage 4
 
-Notifications should not be fetched from database on every refresh.
+## Scaling and Performance
 
-Caching and pagination can reduce database load.
+Fetching notifications repeatedly from database can increase load.
+
+To improve performance:
+- caching can be used
+- pagination can reduce response size
+- old notifications can be archived
+
+This makes the system more scalable for large number of users.
+
+---
 
 # Stage 5
 
-The current implementation is synchronous and slow.
+## Async Processing
 
-Using queues can make notification sending faster and more reliable.
+Sending notifications one by one synchronously can slow down the system.
+
+Using queues improves performance because notifications can be processed in background.
+
+Tools like RabbitMQ or Kafka can also be used in large scale systems.
+
+---
 
 # Stage 6
 
-Notifications are fetched from the provided API and sorted by:
+## Backend Implementation
+
+Backend was built using:
+- Node.js
+- Express
+
+Features implemented:
+- custom logging middleware
+- API integration using Bearer token
+- notification priority sorting
+- latest notification filtering
+
+Notifications are fetched from the provided API and sorted based on:
 Placement > Result > Event
 
-Latest notifications are shown first.
+---
 
 # Stage 7
 
-Frontend built using Next.js and Material UI.
+## Frontend Implementation
 
-Displays notifications in card layout.
+Frontend was built using:
+- Next.js
+- Material UI
+
+The dashboard displays notifications using cards and colored labels.
+
+Frontend fetches data from backend API and displays latest priority notifications.
